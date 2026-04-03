@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #b8e4f9;
+    --sky-light: #dff2fd;
+    --sky-deep: #7ac8ef;
+    --pink: #f9b8d4;
+    --pink-deep: #f07aab;
+    --pink-soft: #fde0ee;
+    --lavender: #d8b8f9;
+    --white: #ffffff;
+    --text-dark: #2a4a6b;
+    --text-mid: #4a7a9b;
+    --gold: #f5c842;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, var(--sky-light) 0%, var(--pink-soft) 50%, var(--sky) 100%);
+    cursor: default;
+  }
+
+  /* ======= FLOATING BACKGROUND PARTICLES ======= */
+  .bg-particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-particles span {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+    animation: floatBg linear infinite;
+  }
+
+  @keyframes floatBg {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.15; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ======= SCREENS ======= */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 10;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(30px);
+  }
+
+  /* ======= SCREEN 1: CODE QUEST ======= */
+  #screen-code {
+    text-align: center;
+    padding: 30px;
+  }
+
+  .code-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--text-dark);
+    line-height: 1.2;
+    margin-bottom: 8px;
+    animation: titleEntrance 1s cubic-bezier(.22,1,.36,1) both;
+  }
+  .code-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    margin-bottom: 40px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    animation: titleEntrance 1s 0.2s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  @keyframes titleEntrance {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .code-display {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 36px;
+    animation: titleEntrance 1s 0.4s cubic-bezier(.22,1,.36,1) both;
+  }
+  .code-digit {
+    width: 80px;
+    height: 96px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border: 2.5px solid rgba(122,200,239,0.5);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--sky-deep);
+    box-shadow: 0 8px 32px rgba(122,200,239,0.2), inset 0 1px 0 rgba(255,255,255,0.8);
+    transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+    position: relative;
+    overflow: hidden;
+  }
+  .code-digit::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 60%);
+    border-radius: 18px;
+  }
+  .code-digit.filled {
+    color: var(--pink-deep);
+    border-color: var(--pink-deep);
+    box-shadow: 0 8px 32px rgba(240,122,171,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
+    transform: scale(1.05);
+  }
+  .code-digit.shake {
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px) rotate(-2deg); }
+    40% { transform: translateX(8px) rotate(2deg); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+
+  .numpad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    max-width: 340px;
+    width: 100%;
+    margin: 0 auto;
+    animation: titleEntrance 1s 0.6s cubic-bezier(.22,1,.36,1) both;
+  }
+  .num-btn {
+    height: 58px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(184,228,249,0.6);
+    border-radius: 16px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 4px 16px rgba(122,200,239,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .num-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(249,184,212,0.5), rgba(184,228,249,0.5));
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 14px;
+  }
+  .num-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 24px rgba(240,122,171,0.25); }
+  .num-btn:hover::before { opacity: 1; }
+  .num-btn:active { transform: scale(0.95); }
+
+  .del-btn {
+    background: rgba(249,184,212,0.4);
+    border-color: rgba(240,122,171,0.4);
+    color: var(--pink-deep);
+    font-size: 1rem;
+  }
+
+  .hint-text {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.5s;
+    animation: titleEntrance 1s 0.8s cubic-bezier(.22,1,.36,1) both;
+  }
+  .hint-text.visible { opacity: 1; }
+
+  .code-wrong {
+    color: var(--pink-deep);
+    font-weight: 700;
+    margin-top: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    min-height: 24px;
+  }
+  .code-wrong.show { opacity: 1; }
+
+  /* ======= SCREEN 2: HEART GAME ======= */
+  #screen-game {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #game-canvas-wrap {
+    position: relative;
+    width: min(420px, 95vw);
+    height: min(580px, 85vh);
+    overflow: hidden;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(122,200,239,0.15) 0%, rgba(249,184,212,0.1) 100%);
+  }
+
+  #game-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .score-display {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 50px;
+    padding: 8px 28px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    border: 2px solid rgba(184,228,249,0.6);
+    box-shadow: 0 4px 20px rgba(122,200,239,0.2);
+    white-space: nowrap;
+    z-index: 20;
+  }
+  .score-display span { color: var(--pink-deep); }
+
+  .game-title-ui {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* ======= SCREEN 3+: MESSAGES ======= */
+  #screen-messages {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .msg-content {
+    max-width: 640px;
+    width: 100%;
+  }
+
+  .msg-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-weight: 700;
+    color: var(--sky-deep);
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 2px 8px rgba(122,200,239,0.3);
+  }
+  .msg-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .msg-deco {
+    font-size: 1rem;
+    color: var(--pink-deep);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: none;
+  }
+  .msg-deco.visible {
+    animation: decoIn 0.6s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes decoIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .next-btn {
+    margin-top: 40px;
+    padding: 16px 44px;
+    background: linear-gradient(135deg, var(--sky-deep), var(--pink-deep));
+    border: none;
+    border-radius: 50px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 8px 32px rgba(122,200,239,0.4), 0 4px 12px rgba(240,122,171,0.3);
+    letter-spacing: 0.05em;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .next-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    border-radius: 50px;
+  }
+  .next-btn.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s 0.4s ease, transform 0.6s 0.4s cubic-bezier(.22,1,.36,1), background 0.3s, box-shadow 0.3s, scale 0.2s;
+  }
+  .next-btn:hover {
+    transform: translateY(-4px) scale(1.05) !important;
+    box-shadow: 0 16px 48px rgba(122,200,239,0.5), 0 8px 20px rgba(240,122,171,0.4);
+  }
+  .next-btn:active { transform: scale(0.96) !important; }
+
+  /* ======= FINAL SCREEN ======= */
+  #screen-final {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .final-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--sky-deep), var(--pink-deep), var(--lavender));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: none;
+  }
+  .final-title.visible {
+    animation: finalIn 1.2s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes finalIn {
+    from { opacity: 0; transform: scale(0.7) rotate(-5deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
+  }
+
+  .final-sub {
+    font-size: 1.2rem;
+    color: var(--text-mid);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    opacity: 0;
+  }
+  .final-sub.visible {
+    animation: titleEntrance 0.8s 0.5s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  .confetti-wrap {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
+  }
+
+  /* ======= TRANSITIONS ======= */
+  .transition-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  /* Paper plane animation */
+  .paper-plane {
+    position: absolute;
+    pointer-events: none;
+    z-index: 30;
+    opacity: 0;
+  }
+
+  /* Click effect */
+  .click-burst {
+    position: fixed;
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Sound waves */
+  .sound-ring {
+    position: fixed;
+    border-radius: 50%;
+    border: 3px solid var(--pink-deep);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 200;
+    animation: soundRing 0.6s ease-out forwards;
+  }
+  @keyframes soundRing {
+    from { opacity: 0.7; transform: scale(0.2); }
+    to { opacity: 0; transform: scale(1.5); }
+  }
+
+  /* Progress dots */
+  .progress-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+    opacity: 0;
+  }
+  .progress-dots.visible { opacity: 1; transition: opacity 0.5s; }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(122,200,239,0.3);
+    transition: all 0.4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .dot.active {
+    background: var(--sky-deep);
+    transform: scale(1.4);
+  }
+  .dot.done {
+    background: var(--pink-deep);
+  }
+
+  /* Sparkle */
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 300;
+    animation: sparkleAnim 0.8s ease forwards;
+  }
+  @keyframes sparkleAnim {
+    0% { opacity: 1; transform: scale(0) rotate(0); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
+    100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background particles -->
+<div class="bg-particles" id="bgParticles"></div>
+
+<!-- SCREEN 1: Code Quest -->
+<div class="screen" id="screen-code">
+  <div class="code-title">Selamat Datang ✨</div>
+  <div class="code-subtitle">Masukkan tanggal ulang tahunmu untuk melanjutkan</div>
+  <div class="code-display">
+    <div class="code-digit" id="digit-0">_</div>
+    <div class="code-digit" id="digit-1">_</div>
+  </div>
+  <div class="numpad">
+    <button class="num-btn" onclick="pressNum('1')">1</button>
+    <button class="num-btn" onclick="pressNum('2')">2</button>
+    <button class="num-btn" onclick="pressNum('3')">3</button>
+    <button class="num-btn" onclick="pressNum('4')">4</button>
+    <button class="num-btn" onclick="pressNum('5')">5</button>
+    <button class="num-btn" onclick="pressNum('6')">6</button>
+    <button class="num-btn" onclick="pressNum('7')">7</button>
+    <button class="num-btn" onclick="pressNum('8')">8</button>
+    <button class="num-btn" onclick="pressNum('9')">9</button>
+    <button class="num-btn" onclick="pressNum('0')">0</button>
+    <button class="num-btn del-btn" onclick="deleteNum()">⌫</button>
+  </div>
+  <div class="hint-text" id="hintText">Petunjuk: Tanggal lahirmu adalah kuncinya</div>
+  <div class="code-wrong" id="codeWrong">Hmm, bukan itu... coba lagi!</div>
+</div>
+
+<!-- SCREEN 2: Heart Game -->
+<div class="screen hidden" id="screen-game">
+  <div class="game-title-ui">Tangkap 18 hati untuk melanjutkan!</div>
+  <div id="game-canvas-wrap">
+    <canvas id="game-canvas"></canvas>
+    <div class="score-display">Skor: <span id="scoreText">0</span> / 18</div>
+  </div>
+</div>
+
+<!-- SCREEN 3+: Messages -->
+<div class="screen hidden" id="screen-messages">
+  <div class="msg-content">
+    <div class="msg-deco" id="msgDeco">Untuk kamu</div>
+    <div class="msg-text" id="msgText"></div>
+    <div class="progress-dots" id="progressDots"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextMessage()"></button>
+  </div>
+</div>
+
+<!-- SCREEN FINAL -->
+<div class="screen hidden" id="screen-final">
+  <div class="final-title" id="finalTitle">Happy Birthday!</div>
+  <div class="final-sub" id="finalSub">Semoga hari ini dan setiap harinya penuh kebahagiaan</div>
+  <div class="confetti-wrap" id="confettiWrap"></div>
+</div>
+
+<script>
+// ============================================
+// BACKGROUND PARTICLES
+// ============================================
+(function initBg() {
+  const wrap = document.getElementById('bgParticles');
+  const colors = ['#b8e4f9','#f9b8d4','#d8b8f9','#7ac8ef','#f07aab'];
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('span');
+    const size = 20 + Math.random() * 60;
+    s.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${8+Math.random()*14}s;
+      animation-delay:${-Math.random()*15}s;
+    `;
+    wrap.appendChild(s);
+  }
+})();
+
+// ============================================
+// AUDIO ENGINE (Web Audio API)
+// ============================================
+let audioCtx = null;
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTone(freq, type='sine', dur=0.15, vol=0.3, delay=0) {
+  try {
+    const ctx = getAudio();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+    gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+    gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + delay + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + dur);
+    osc.start(ctx.currentTime + delay);
+    osc.stop(ctx.currentTime + delay + dur + 0.05);
+  } catch(e){}
+}
+function playChime() {
+  const notes = [523, 659, 784, 1047];
+  notes.forEach((f,i) => playTone(f,'sine',0.3,0.25,i*0.1));
+}
+function playWrong() {
+  playTone(200,'sawtooth',0.2,0.2);
+  playTone(180,'sawtooth',0.2,0.15,0.12);
+}
+function playClick() {
+  playTone(880,'sine',0.08,0.15);
+}
+function playHeartCatch() {
+  playTone(523,'sine',0.12,0.3);
+  playTone(659,'sine',0.12,0.25,0.08);
+}
+function playSuccess() {
+  [523,659,784,1047,1319].forEach((f,i)=>playTone(f,'sine',0.4,0.3,i*0.08));
+}
+function playNextMsg() {
+  playTone(784,'sine',0.15,0.2);
+  playTone(987,'sine',0.15,0.2,0.1);
+}
+
+// ============================================
+// SCREEN 1: CODE QUEST
+// ============================================
+let codeInput = '';
+let hintShown = false;
+let wrongCount = 0;
+
+function pressNum(n) {
+  if (codeInput.length >= 2) return;
+  playClick();
+  createSparkleAt(event.clientX, event.clientY);
+  codeInput += n;
+  updateCodeDisplay();
+  if (codeInput.length === 2) {
+    setTimeout(checkCode, 300);
+  }
+}
+
+function deleteNum() {
+  if (codeInput.length === 0) return;
+  playTone(440,'sine',0.08,0.1);
+  codeInput = codeInput.slice(0,-1);
+  updateCodeDisplay();
+}
+
+function updateCodeDisplay() {
+  for (let i = 0; i < 2; i++) {
+    const d = document.getElementById('digit-'+i);
+    if (codeInput[i]) {
+      d.textContent = codeInput[i];
+      d.classList.add('filled');
+    } else {
+      d.textContent = '_';
+      d.classList.remove('filled');
+    }
+  }
+}
+
+function checkCode() {
+  if (codeInput === '18') {
+    playSuccess();
+    document.getElementById('digit-0').style.animation = 'successPulse 0.5s ease both';
+    document.getElementById('digit-1').style.animation = 'successPulse 0.5s 0.1s ease both';
+    const style = document.createElement('style');
+    style.textContent = `@keyframes successPulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}`;
+    document.head.appendChild(style);
+    setTimeout(()=>transitionTo('screen-code','screen-game'), 900);
+  } else {
+    wrongCount++;
+    playWrong();
+    document.getElementById('digit-0').classList.add('shake');
+    document.getElementById('digit-1').classList.add('shake');
+    setTimeout(()=>{
+      document.getElementById('digit-0').classList.remove('shake');
+      document.getElementById('digit-1').classList.remove('shake');
+    }, 500);
+    document.getElementById('codeWrong').classList.add('show');
+    setTimeout(()=>document.getElementById('codeWrong').classList.remove('show'), 2000);
+    codeInput = '';
+    updateCodeDisplay();
+    if (wrongCount >= 2) {
+      document.getElementById('hintText').classList.add('visible');
+    }
+  }
+}
+
+// ============================================
+// SCREEN 2: HEART GAME (Canvas)
+// ============================================
+const canvas = document.getElementById('game-canvas');
+const ctx2 = canvas.getContext('2d');
+let score = 0;
+let hearts = [];
+let planes = [];
+let particles = [];
+let animId = null;
+let gameActive = false;
+
+function resizeCanvas() {
+  const wrap = document.getElementById('game-canvas-wrap');
+  canvas.width = wrap.clientWidth;
+  canvas.height = wrap.clientHeight;
+}
+
+// Mathematical heart shape using parametric equations
+function drawHeart(cx, cy, size, color, alpha=1, rotation=0) {
+  ctx2.save();
+  ctx2.translate(cx, cy);
+  ctx2.rotate(rotation);
+  ctx2.globalAlpha = alpha;
+  ctx2.beginPath();
+  for (let t = 0; t <= Math.PI * 2; t += 0.05) {
+    const x = size * 16 * Math.pow(Math.sin(t), 3) / 16;
+    const y = -size * (13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t)) / 16;
+    if (t === 0) ctx2.moveTo(x, y);
+    else ctx2.lineTo(x, y);
+  }
+  ctx2.closePath();
+  const grad = ctx2.createRadialGradient(-size*0.2, -size*0.2, 0, 0, 0, size);
+  grad.addColorStop(0, lightenColor(color, 40));
+  grad.addColorStop(1, color);
+  ctx2.fillStyle = grad;
+  ctx2.shadowColor = color;
+  ctx2.shadowBlur = 10;
+  ctx2.fill();
+  ctx2.restore();
+}
+
+function lightenColor(hex, amt) {
+  let r = parseInt(hex.slice(1,3),16)+amt;
+  let g = parseInt(hex.slice(3,5),16)+amt;
+  let b = parseInt(hex.slice(5,7),16)+amt;
+  r=Math.min(255,r); g=Math.min(255,g); b=Math.min(255,b);
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+
+// Paper plane shape
+function drawPaperPlane(cx, cy, size, angle, color, alpha=1) {
+  ctx2.save();
+  ctx2.translate(cx, cy);
+  ctx2.rotate(angle);
+  ctx2.globalAlpha = alpha;
+  ctx2.beginPath();
+  ctx2.moveTo(size, 0);
+  ctx2.lineTo(-size, -size*0.5);
+  ctx2.lineTo(-size*0.5, 0);
+  ctx2.lineTo(-size, size*0.5);
+  ctx2.closePath();
+  const grad = ctx2.createLinearGradient(-size, 0, size, 0);
+  grad.addColorStop(0, color);
+  grad.addColorStop(1, lightenColor(color, 60));
+  ctx2.fillStyle = grad;
+  ctx2.fill();
+  ctx2.beginPath();
+  ctx2.moveTo(-size*0.5, 0);
+  ctx2.lineTo(-size, size*0.5);
+  ctx2.lineTo(-size*0.2, size*0.1);
+  ctx2.closePath();
+  ctx2.fillStyle = color;
+  ctx2.globalAlpha = alpha * 0.5;
+  ctx2.fill();
+  ctx2.restore();
+}
+
+class Heart {
+  constructor() {
+    this.x = 30 + Math.random() * (canvas.width - 60);
+    this.y = -30;
+    this.size = 14 + Math.random() * 10;
+    this.speed = 1.2 + Math.random() * 1.5;
+    this.colors = ['#f07aab','#e75480','#ff9fc0','#c0729f','#d946ef'];
+    this.color = this.colors[Math.floor(Math.random()*this.colors.length)];
+    this.sway = (Math.random()-0.5) * 1.5;
+    this.swaySpeed = 0.02 + Math.random()*0.02;
+    this.swayT = Math.random()*Math.PI*2;
+    this.rotation = 0;
+    this.rotSpeed = (Math.random()-0.5)*0.04;
+    this.scale = 1;
+    this.pulse = Math.random()*Math.PI*2;
+    this.alpha = 0;
+    this.fadeIn = true;
+    this.id = Math.random();
+  }
+  update() {
+    this.y += this.speed;
+    this.swayT += this.swaySpeed;
+    this.x += Math.sin(this.swayT) * this.sway;
+    this.rotation += this.rotSpeed;
+    this.pulse += 0.08;
+    this.scale = 1 + Math.sin(this.pulse) * 0.08;
+    if (this.fadeIn && this.alpha < 1) this.alpha = Math.min(1, this.alpha + 0.05);
+  }
+  draw() {
+    drawHeart(this.x, this.y, this.size * this.scale, this.color, this.alpha, this.rotation);
+  }
+  isOut() { return this.y > canvas.height + 40; }
+}
+
+class PaperPlane {
+  constructor() {
+    const side = Math.random() < 0.5 ? -1 : 1;
+    this.x = side < 0 ? -40 : canvas.width + 40;
+    this.y = 60 + Math.random() * (canvas.height - 120);
+    this.vx = side * (1.5 + Math.random() * 2);
+    this.vy = (Math.random()-0.5) * 1.2;
+    this.angle = Math.atan2(this.vy, this.vx);
+    this.colors = ['#7ac8ef','#b8e4f9','#a0d4f5'];
+    this.color = this.colors[Math.floor(Math.random()*this.colors.length)];
+    this.size = 16 + Math.random()*10;
+    this.alpha = 0.7 + Math.random()*0.3;
+    this.trail = [];
+  }
+  update() {
+    this.trail.push({x: this.x, y: this.y});
+    if (this.trail.length > 12) this.trail.shift();
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += 0.01;
+    this.angle = Math.atan2(this.vy, this.vx);
+  }
+  draw() {
+    // Trail
+    for (let i=0; i<this.trail.length; i++) {
+      const a = (i/this.trail.length)*0.15*this.alpha;
+      ctx2.beginPath();
+      ctx2.arc(this.trail[i].x, this.trail[i].y, 2, 0, Math.PI*2);
+      ctx2.fillStyle = this.color;
+      ctx2.globalAlpha = a;
+      ctx2.fill();
+    }
+    ctx2.globalAlpha = 1;
+    drawPaperPlane(this.x, this.y, this.size, this.angle, this.color, this.alpha);
+  }
+  isOut() {
+    return this.x < -100 || this.x > canvas.width+100 || this.y > canvas.height+100;
+  }
+}
+
+class Particle {
+  constructor(x, y, color) {
+    this.x = x; this.y = y;
+    this.vx = (Math.random()-0.5)*6;
+    this.vy = -2 - Math.random()*4;
+    this.color = color;
+    this.alpha = 1;
+    this.size = 3 + Math.random()*4;
+    this.isHeart = Math.random() < 0.5;
+    this.rotation = Math.random()*Math.PI*2;
+    this.rotSpeed = (Math.random()-0.5)*0.1;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += 0.2;
+    this.alpha -= 0.025;
+    this.rotation += this.rotSpeed;
+    this.vx *= 0.98;
+  }
+  draw() {
+    if (this.alpha <= 0) return;
+    if (this.isHeart) {
+      drawHeart(this.x, this.y, this.size*0.8, this.color, this.alpha, this.rotation);
+    } else {
+      ctx2.save();
+      ctx2.translate(this.x, this.y);
+      ctx2.rotate(this.rotation);
+      ctx2.globalAlpha = this.alpha;
+      ctx2.fillStyle = this.color;
+      ctx2.fillRect(-this.size/2,-this.size/2,this.size,this.size);
+      ctx2.restore();
+    }
+  }
+  isDead() { return this.alpha <= 0; }
+}
+
+function spawnParticles(x, y, color) {
+  const pColors = [color, '#f9b8d4', '#ffd6e8', '#b8e4f9', '#ffffff'];
+  for (let i = 0; i < 16; i++) {
+    particles.push(new Particle(x, y, pColors[Math.floor(Math.random()*pColors.length)]));
+  }
+}
+
+function gameLoop() {
+  if (!gameActive) return;
+  ctx2.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw background gradient
+  const bg = ctx2.createLinearGradient(0,0,0,canvas.height);
+  bg.addColorStop(0, 'rgba(183,228,249,0.08)');
+  bg.addColorStop(1, 'rgba(249,184,212,0.08)');
+  ctx2.fillStyle = bg;
+  ctx2.fillRect(0,0,canvas.width,canvas.height);
+
+  // Spawn hearts
+  if (Math.random() < 0.04 + score*0.002) {
+    hearts.push(new Heart());
+  }
+  // Spawn planes
+  if (Math.random() < 0.008) {
+    planes.push(new PaperPlane());
+  }
+
+  // Update & draw planes
+  planes = planes.filter(p => { p.update(); p.draw(); return !p.isOut(); });
+
+  // Update & draw particles
+  particles = particles.filter(p => { p.update(); p.draw(); return !p.isDead(); });
+
+  // Update & draw hearts
+  hearts = hearts.filter(h => { h.update(); h.draw(); return !h.isOut(); });
+
+  animId = requestAnimationFrame(gameLoop);
+}
+
+function startGame() {
+  resizeCanvas();
+  score = 0;
+  hearts = [];
+  planes = [];
+  particles = [];
+  gameActive = true;
+  document.getElementById('scoreText').textContent = '0';
+  gameLoop();
+
+  canvas.addEventListener('click', onGameClick);
+  canvas.addEventListener('touchstart', onGameTouch, {passive: false});
+}
+
+function onGameClick(e) {
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+  const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+  checkHeartHit(mx, my);
+}
+
+function onGameTouch(e) {
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const mx = (touch.clientX - rect.left) * (canvas.width / rect.width);
+  const my = (touch.clientY - rect.top) * (canvas.height / rect.height);
+  checkHeartHit(mx, my);
+}
+
+function checkHeartHit(mx, my) {
+  for (let i = hearts.length-1; i >= 0; i--) {
+    const h = hearts[i];
+    const dx = mx - h.x, dy = my - h.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (dist < h.size * 1.5) {
+      spawnParticles(h.x, h.y, h.color);
+      hearts.splice(i, 1);
+      score++;
+      document.getElementById('scoreText').textContent = score;
+      playHeartCatch();
+      createSoundRing(h.x + canvas.getBoundingClientRect().left, h.y + canvas.getBoundingClientRect().top);
+      if (score >= 18) {
+        gameActive = false;
+        cancelAnimationFrame(animId);
+        canvas.removeEventListener('click', onGameClick);
+        canvas.removeEventListener('touchstart', onGameTouch);
+        playSuccess();
+        setTimeout(()=>transitionTo('screen-game','screen-messages', ()=>{
+          initMessages();
+        }), 800);
+      }
+      break;
+    }
+  }
+}
+
+function createSoundRing(x, y) {
+  const ring = document.createElement('div');
+  ring.className = 'sound-ring';
+  const size = 40;
+  ring.style.cssText = `left:${x-size/2}px;top:${y-size/2}px;width:${size}px;height:${size}px;`;
+  document.body.appendChild(ring);
+  setTimeout(()=>ring.remove(), 700);
+}
+
+// ============================================
+// SCREEN 3+: MESSAGES
+// ============================================
+const messages = [
+  {
+    deco: "Hari yang Istimewa",
+    text: "Selamat ulang tahun yang ke-18! Hari ini bukan sekadar pergantian angka, tapi sebuah pintu besar yang terbuka lebar untukmu. Semua mimpi yang pernah kamu bisikkan dalam diam, kini waktunya untuk berteriak lantang.",
+    btn: "Terus baca, ada lagi"
+  },
+  {
+    deco: "Tentang Dirimu",
+    text: "Delapan belas tahun bukanlah perjalanan yang pendek. Setiap senyummu, setiap air matamu, setiap perjuanganmu yang tak terlihat orang lain — semuanya membentukmu menjadi seseorang yang luar biasa tepat seperti sekarang ini.",
+    btn: "Ada satu hal lagi..."
+  },
+  {
+    deco: "Untuk Masa Depanmu",
+    text: "Di usia yang baru ini, semoga kamu menemukan keberanian untuk melangkah maju bahkan ketika jalan terasa gelap. Percayalah bahwa setiap hal yang kamu inginkan itu nyata dan bisa kamu raih dengan tangan sendiri.",
+    btn: "Masih ada pesannya"
+  },
+  {
+    deco: "Dari Hati",
+    text: "Semoga setiap harimu dipenuhi oleh hal-hal kecil yang membuatmu bahagia. Secangkir minuman favoritmu, langit sore yang indah, dan tawa yang tulus bersama orang-orang yang kamu cintai.",
+    btn: "Lanjutin yuk"
+  },
+  {
+    deco: "Selalu",
+    text: "Kamu layak mendapatkan semua kebaikan yang ada di dunia ini. Bukan karena kamu sempurna, tapi karena kamu sungguh-sungguh dan tulus dalam menjalani hidupmu. Dan itu jauh lebih berharga dari kesempurnaan manapun.",
+    btn: "Hampir sampai"
+  },
+  {
+    deco: "Satu Harapan",
+    text: "Semoga di usia delapan belas ini, kamu bisa lebih mencintai dirimu sendiri. Tidak ada orang yang lebih berhak menerima kasih sayangmu daripada kamu sendiri. Jagalah dirimu baik-baik, ya.",
+    btn: "Buka pesannya!"
+  }
+];
+
+let currentMsg = 0;
+
+function initMessages() {
+  currentMsg = 0;
+  const dotsWrap = document.getElementById('progressDots');
+  dotsWrap.innerHTML = '';
+  messages.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    dotsWrap.appendChild(d);
+  });
+  dotsWrap.classList.add('visible');
+  showMessage(0);
+}
+
+function showMessage(idx) {
+  const m = messages[idx];
+  const deco = document.getElementById('msgDeco');
+  const text = document.getElementById('msgText');
+  const btn = document.getElementById('nextBtn');
+
+  deco.classList.remove('visible');
+  text.classList.remove('visible');
+  btn.classList.remove('visible');
+
+  setTimeout(()=>{
+    deco.textContent = m.deco;
+    deco.classList.add('visible');
+  }, 100);
+
+  setTimeout(()=>{
+    text.textContent = m.text;
+    text.classList.add('visible');
+  }, 300);
+
+  setTimeout(()=>{
+    btn.textContent = m.btn;
+    btn.classList.add('visible');
+  }, 700);
+
+  // Update dots
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((d,i)=>{
+    d.className = 'dot';
+    if (i < idx) d.classList.add('done');
+    if (i === idx) d.classList.add('active');
+  });
+}
+
+function nextMessage() {
+  playNextMsg();
+  createSparkleAt(event.clientX, event.clientY);
+  currentMsg++;
+  if (currentMsg >= messages.length) {
+    transitionTo('screen-messages','screen-final',()=>{
+      launchFinal();
+    });
+  } else {
+    showMessage(currentMsg);
+  }
+}
+
+// ============================================
+// FINAL SCREEN
+// ============================================
+function launchFinal() {
+  const title = document.getElementById('finalTitle');
+  const sub = document.getElementById('finalSub');
+  title.classList.add('visible');
+  setTimeout(()=>sub.classList.add('visible'), 600);
+  setTimeout(launchConfetti, 300);
+  playSuccess();
+  setTimeout(()=>playChime(), 600);
+}
+
+function launchConfetti() {
+  const wrap = document.getElementById('confettiWrap');
+  const colors = ['#f07aab','#7ac8ef','#b8e4f9','#f9b8d4','#d8b8f9','#f5c842','#ff9fc0'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    const size = 6 + Math.random()*10;
+    const isHeart = Math.random() < 0.3;
+    const left = Math.random()*100;
+    const delay = Math.random()*3;
+    const dur = 2 + Math.random()*3;
+    if (isHeart) {
+      c.style.cssText = `
+        position:absolute;
+        left:${left}%;top:-20px;
+        width:${size}px;height:${size}px;
+        animation:confettiFall ${dur}s ${delay}s ease-in infinite;
+      `;
+      c.innerHTML = `<svg viewBox="-1 -1 2 2" style="width:${size}px;height:${size}px;overflow:visible">
+        <path d="${heartPath()}" fill="${color}" opacity="0.8"/>
+      </svg>`;
+    } else {
+      const shape = Math.random() < 0.5 ? 'circle' : '';
+      c.style.cssText = `
+        position:absolute;
+        left:${left}%;top:-20px;
+        width:${size}px;height:${size}px;
+        background:${color};
+        border-radius:${shape?'50%':'3px'};
+        opacity:0.8;
+        animation:confettiFall ${dur}s ${delay}s ease-in infinite;
+      `;
+    }
+    wrap.appendChild(c);
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes confettiFall {
+      0% { transform: translateY(-20px) rotate(0) translateX(0); opacity:1; }
+      80% { opacity:0.8; }
+      100% { transform: translateY(110vh) rotate(${360+Math.random()*360}deg) translateX(${(Math.random()-0.5)*200}px); opacity:0; }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function heartPath() {
+  let d = '';
+  for (let i=0; i<=64; i++) {
+    const t = (i/64)*Math.PI*2;
+    const x = 16*Math.pow(Math.sin(t),3)/16;
+    const y = -(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))/16;
+    d += (i===0?'M':'L')+x.toFixed(3)+','+y.toFixed(3);
+  }
+  return d+'Z';
+}
+
+// ============================================
+// TRANSITIONS
+// ============================================
+function transitionTo(from, to, callback) {
+  const fromEl = document.getElementById(from);
+  const toEl = document.getElementById(to);
+  fromEl.style.opacity = '0';
+  fromEl.style.transform = 'translateY(-20px)';
+  setTimeout(()=>{
+    fromEl.classList.add('hidden');
+    fromEl.style.opacity = '';
+    fromEl.style.transform = '';
+    toEl.classList.remove('hidden');
+    toEl.style.opacity = '0';
+    toEl.style.transform = 'translateY(20px)';
+    setTimeout(()=>{
+      toEl.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      toEl.style.opacity = '1';
+      toEl.style.transform = 'translateY(0)';
+      if (to === 'screen-game') startGame();
+      if (callback) setTimeout(callback, 200);
+    }, 50);
+  }, 600);
+}
+
+// ============================================
+// SPARKLE EFFECTS
+// ============================================
+function createSparkleAt(x, y) {
+  const colors = ['#f07aab','#7ac8ef','#f5c842','#d8b8f9'];
+  for (let i = 0; i < 5; i++) {
+    const s = document.createElement('div');
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    const size = 6 + Math.random()*10;
+    const angle = (Math.random()*360);
+    const dist = 20 + Math.random()*40;
+    const tx = Math.cos(angle*Math.PI/180)*dist;
+    const ty = Math.sin(angle*Math.PI/180)*dist;
+    s.className = 'sparkle';
+    s.style.cssText = `
+      left:${x-size/2}px;top:${y-size/2}px;
+      width:${size}px;height:${size}px;
+      background:${color};
+      border-radius:50%;
+      --tx:${tx}px;--ty:${ty}px;
+    `;
+    const style = `@keyframes sparkleMove{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}}`;
+    const st = document.createElement('style');
+    st.textContent = style;
+    document.head.appendChild(st);
+    s.style.animation = `sparkleMove 0.6s ease forwards`;
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(), 700);
+  }
+}
+
+// ============================================
+// INIT
+// ============================================
+window.addEventListener('resize', ()=>{
+  if (gameActive) resizeCanvas();
+});
+
+// Initial hint show
+setTimeout(()=>{
+  document.getElementById('hintText').classList.add('visible');
+}, 3000);
+</script>
+</body>
+</html>
